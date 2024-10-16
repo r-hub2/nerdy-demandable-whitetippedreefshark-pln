@@ -1,0 +1,103 @@
+# C code modified for interface to matlab, February 2007
+
+# Programs 
+# starting points for thresholds for iterative MLE based on ordinal logit model
+# MLE for polytomous logit-normal (PLN) model and Rasch model (constant slopes)
+# M2 statistics for these two models
+#
+# Standalone programs for data sets: 
+#   startpln, nrmlepln, m2, nrmlerasch, m2rasch 
+
+# A single library
+CCODE=amatrix.c cmata.c d2v.c m2.c m2rasch.c nrbcpln.c nrminbcl.c nrmin.c \
+nrmlepln.c nrmlerasch.c polyder2.c ssgauher.c startpln.c x2statb.c \
+bcplncov.c  geppldet.c
+
+OCODE=amatrix.o cmata.o d2v.o m2.o m2rasch.o nrbcpln.o nrminbcl.o nrmin.o \
+nrmlepln.o nrmlerasch.o polyder2.o ssgauher.o startpln.o x2statb.o \
+bcplncov.o  geppldet.o
+
+# R will look at first target all
+PKG_CFLAGS=-DR -DALL
+
+all: $(SHLIB)
+
+
+# Creates executables runnable from command line
+standalone: startpln nrmlepln m2 nrmlerasch m2rasch
+
+#============================================================
+
+# routines needed by programs
+
+# Newton-Raphson minimization with function to be minimized
+nrmin: nrmin.c
+	gcc -c nrmin.c
+
+# matrix allocation in contiguous space
+amatrix: amatrix.c
+	gcc -c amatrix.c
+
+# gauss-hermite integ for polytomous logit-normal model 
+# compute derivatives and Hessian matrix of pr wrt parameters
+polyder2: polyder2.c ssgauher.c amatrix.c
+	gcc -DMAIN -o polyder2 polyder2.c ssgauher.c amatrix.c -lm
+# polyder2 < polyder2.in
+
+#============================================================
+
+# compilations for standalone C versions
+
+# summarize data into univariate margins in order to get starting
+#  point estimate for polytomous logit-normit model
+startpln: startpln.c
+	gcc -DMAIN -o startpln startpln.c -lm
+# startpln 5 3 67 < sim3fr.dat
+# startpln 5 3 141 < npo3fr.dat
+# startpln 20 2 239 < bhsfr.dat
+
+# log-likelihood for polytomous logit-normit model
+# using Newton Raphson with computed Hessian
+# input data set, separate file for input parameters (see example below) 
+nrmlepln: nrmlepln.c nrmin.o amatrix.o ssgauher.c polyder2.c
+	gcc -DDATA -o nrmlepln nrmlepln.c nrmin.o amatrix.o ssgauher.c polyder2.c -lm
+# nrmlepln sim3fr.par < sim3fr.dat  , extract MLE to  sim3pln.par
+# nrmlepln npo3fr.par < npo3fr.dat  , extract MLE to  npo3pln.par
+
+# M2 (and X2) statistics for polytomous logit-normit model,
+# given data set and MLE parameter estimates
+m2: m2.c cmata.c ssgauher.c d2v.c amatrix.o x2statb.c
+	gcc -DMAINM -o m2 m2.c cmata.c ssgauher.c d2v.c amatrix.o x2statb.c -lm
+# m2 sim3pln.par < sim3fr.dat > sim3.m2.txt
+# m2 npo3pln.par < npo3fr.dat > npo3.m2.txt
+# m2 bhspln.par < bhsfr.dat > bhs.m2.txt    
+
+# log-likelihood for polytomous logit-normit model with common beta
+# using Newton Raphson with computed Hessian
+# input data set, separate file for input parameters (see example below) 
+nrmlerasch: nrmlerasch.c nrmin.o amatrix.o ssgauher.c polyder2.c
+	gcc -DDATA -o nrmlerasch nrmlerasch.c nrmin.o amatrix.o \
+	  ssgauher.c polyder2.c -lm
+# nrmlerasch sim3fr.par < sim3fr.dat , extract MLE to  sim3rasch.par
+# nrmlerasch npo3fr.par < npo3fr.dat , extract MLE to  npo3rasch.par
+
+# M2 statistic based on MLE, rasch model (constant beta)
+m2rasch: m2rasch.c ssgauher.c cmata.c d2v.c amatrix.o
+	gcc -DMAINM -o m2rasch m2rasch.c ssgauher.c cmata.c d2v.c amatrix.o -lm
+# m2rasch sim3rasch.par < sim3fr.dat > sim3.m2rasch.txt
+# m2rasch npo3rasch.par < npo3fr.dat > npo3.m2rasch.txt
+# m2rasch bhsrasch.par < bhsfr.dat > bhs.m2rasch.txt
+
+#============================================================
+
+# more on bivariate composite likelihood
+# asymptotic covariance matrix for BCL with PLN model
+bcplncov: bcplncov.c ssgauher.c d2v.c geppldet.c amatrix.c
+	gcc -DMAINC -o bcplncov bcplncov.c ssgauher.c d2v.c geppldet.c amatrix.c -lm
+# bcplncov < npo3bc.par > npo3bccov.out
+# bcplncov < heinenbc.par > heinenbccov.out
+# bcplncov < simn20m4bc.par > simn20m4bccov.out
+
+# asymptotic covariance matrix for BCL  for Rasch model
+# need small changes to the above code
+
