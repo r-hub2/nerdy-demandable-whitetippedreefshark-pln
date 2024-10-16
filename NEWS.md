@@ -3,6 +3,7 @@
 ## Fix
 
 - Clean up a NOTE re: tests text changed, output ok
+- Clean up issues with calloc
 
 # pln 0.2-2
 

@@ -145,9 +145,9 @@ void Rsimulpln( int *nitems0, int *ncateg0, int *nsampsize0, double *alpvec, dou
   double **dat,*fr,**datfr;
 
   nq=48;
-  x=(double *) Calloc((nq+1), double);
-  w=(double *) Calloc((nq+1), double);
-  cdfw=(double *) Calloc((nq+1), double);
+  x=(double *) calloc((nq+1), sizeof(double));
+  w=(double *) calloc((nq+1), sizeof(double));
+  cdfw=(double *) calloc((nq+1), sizeof(double));
   gauher(x,w,nq);
   for (j=1;j<=nq;j++) x[j]*=M_SQRT2;
   for (j=1;j<=nq;j++) w[j]/=SQRTPI;
@@ -161,14 +161,14 @@ void Rsimulpln( int *nitems0, int *ncateg0, int *nsampsize0, double *alpvec, dou
   nsampsize= *nsampsize0;
 
   dat=dmatrix(nsampsize,nitems);
-  fr=(double *) Calloc((nsampsize), double);
+  fr=(double *) calloc((nsampsize), sizeof(double));
 
   /* alp[i][1],...,alp[i][ncateg-1] should be in decreasing order */
   alp=dmatrix(nitems+1,ncateg);
   for(i=0;i<nitems;i++)
   { for(j=0;j<(ncateg-1);j++) alp[i+1][j+1]=alpvec[(ncateg-1)*i+j]; }
 
-  b=(double *) Calloc((nitems+1), double);
+  b=(double *) calloc((nitems+1), sizeof(double));
   for(i=0;i<nitems;i++) b[i+1]=beta0[i];
 
   GetRNGstate();

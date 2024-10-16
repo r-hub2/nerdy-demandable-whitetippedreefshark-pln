@@ -154,7 +154,7 @@ void plnnllk(int np, double *param, double *nllk, double **dd, int iprint,
 #ifndef R
   b=(double *) malloc((n+1) * sizeof(double));
 #else
-  b=(double *) Calloc((n+1), double);
+  b=(double *) calloc((n+1), sizeof(double));
 #endif
   ip=0;
   for(i=1;i<=n;i++)
@@ -187,8 +187,8 @@ void plnnllk(int np, double *param, double *nllk, double **dd, int iprint,
   kk=(int *) malloc((n+1) * sizeof(int));
   der=(double *) malloc((np+1) * sizeof(double));
 #else
-  kk=(int *) Calloc((n+1), int);
-  der=(double *) Calloc((np+1), double);
+  kk=(int *) calloc((n+1), sizeof(int));
+  der=(double *) calloc((np+1), sizeof(double));
 #endif
   hes=dmatrix(np+1,np+1);
 
@@ -274,8 +274,8 @@ void Rnrmlepln( int *nitem, int *ncateg, int *nrec, double *dataset,
    n=*nitem;
 
    /*nq=48; */
-   x=(double *) Calloc((*nq+1), double); 
-   w=(double *) Calloc((*nq+1), double); 
+   x=(double *) calloc((*nq+1), sizeof(double)); 
+   w=(double *) calloc((*nq+1), sizeof(double)); 
    gauher(x,w,*nq); 
 
    for (j=1;j<=*nq;j++) x[j]*=M_SQRT2; 
@@ -287,7 +287,7 @@ void Rnrmlepln( int *nitem, int *ncateg, int *nrec, double *dataset,
  
    /* convert to matrices in C (i.e. row/column transpose) */
    dat=dmatrix(*nrec,*nitem); 
-   fr=(double *) Calloc((*nrec), double); 
+   fr=(double *) calloc((*nrec), sizeof(double)); 
    /* nn = total of fr[] */
    for(i=0,nn=0;i<*nrec;i++) 
    { for(j=0;j<*nitem;j++) dat[i][j] = *(dataset + (j*(*nrec)+i));  
@@ -302,8 +302,8 @@ void Rnrmlepln( int *nitem, int *ncateg, int *nrec, double *dataset,
    }
    np=(*ncateg)*(*nitem); 
 
-   lb=(double *) Calloc(np, double); 
-   ub=(double *) Calloc(np, double); 
+   lb=(double *) calloc(np, sizeof(double)); 
+   ub=(double *) calloc(np, sizeof(double)); 
    for(ip=0;ip<np;ip++) { lb[ip]=*(abound+0); ub[ip]=*(abound+1); } 
 
   /* cannot put lower bound of 0 on betas unless
@@ -314,7 +314,7 @@ void Rnrmlepln( int *nitem, int *ncateg, int *nrec, double *dataset,
    /* alp[i][1],...,alp[i][m-1] should be in decreasing order */
 
    alp=dmatrix((*nitem)+1,(*ncateg)); 
-   param=(double *) Calloc(np, double); 
+   param=(double *) calloc(np, sizeof(double)); 
    for(i=0;i<(*nitem);i++)
    { for(j=0;j<((*ncateg)-1);j++)  
      { alp[i+1][j+1]=*(alphas + ((*ncateg)-1)*i+j); param[ip]=alp[i+1][j+1]; ip++;
@@ -325,7 +325,7 @@ void Rnrmlepln( int *nitem, int *ncateg, int *nrec, double *dataset,
      } 
    } 
 
-   b=(double *) Calloc(((*nitem)+1), double);  
+   b=(double *) calloc(((*nitem)+1), sizeof(double));  
    for(i=0;i<(*nitem);i++)   
    { param[ip]=*(bvec + i); b[i]=*(bvec + i); ip++;  
      /*if(*iprint==1)

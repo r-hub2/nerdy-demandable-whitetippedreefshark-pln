@@ -142,7 +142,7 @@ void raschnllk(int np, double *param, double *nllk, double **dd, int iprint,
 #ifndef R
   bvec=(double *) malloc((n+1) * sizeof(double));
 #else
-  bvec=(double *) Calloc((n+1), double);
+  bvec=(double *) calloc((n+1), sizeof(double));
 #endif
   npful=m*n;
   ip=0;
@@ -177,8 +177,8 @@ void raschnllk(int np, double *param, double *nllk, double **dd, int iprint,
   kk=(int *) malloc((n+1) * sizeof(int));
   der=(double *) malloc((npful+1) * sizeof(double));
 #else
-  kk=(int *) Calloc((n+1), int);
-  der=(double *) Calloc((npful+1), double);
+  kk=(int *) calloc((n+1), sizeof(int));
+  der=(double *) calloc((npful+1), sizeof(double));
 #endif
   hes=dmatrix(npful+1,npful+1);
 
@@ -262,8 +262,8 @@ void Rnrmlerasch( int *nitem, int *ncateg, int *nrec, double *dataset, double *a
   double **dat,*fr;
   double ***g,***g1,***g2;
 
-  x=(double *) Calloc((*nq+1), double);
-  w=(double *) Calloc((*nq+1), double);
+  x=(double *) calloc((*nq+1), sizeof(double));
+  w=(double *) calloc((*nq+1), sizeof(double));
   gauher(x,w,*nq);
   for (j=1;j<=*nq;j++) x[j]*=M_SQRT2;
   for (j=1;j<=*nq;j++) w[j]/=SQRTPI; 
@@ -271,7 +271,7 @@ void Rnrmlerasch( int *nitem, int *ncateg, int *nrec, double *dataset, double *a
   
   /* convert to matrices in C (i.e. row/column transpose) */
   dat=dmatrix(*nrec,*nitem);
-  fr=(double *) Calloc((*nrec), double);
+  fr=(double *) calloc((*nrec), sizeof(double));
   /* nn = total of fr[] */
   for(i=0,nn=0;i<(*nrec);i++)
   { for(j=0;j<(*nitem);j++) dat[i][j] = *(dataset + (j*(*nrec)+i)); 
@@ -286,8 +286,8 @@ void Rnrmlerasch( int *nitem, int *ncateg, int *nrec, double *dataset, double *a
   }
   np=(*ncateg)*(*nitem)-(*nitem)+1;  /* common beta */
 
-  lb=(double *) Calloc(np, double);
-  ub=(double *) Calloc(np, double);
+  lb=(double *) calloc(np, sizeof(double));
+  ub=(double *) calloc(np, sizeof(double));
   for(ip=0;ip<np;ip++) { lb[ip]=*(abound+0); ub[ip]=*(abound+1); } 
   /* add boundary to common slope ? */
   lb[np-1]=*(bbound+0);
@@ -297,7 +297,7 @@ void Rnrmlerasch( int *nitem, int *ncateg, int *nrec, double *dataset, double *a
   /* alp[i][1],...,alp[i][m-1] should be in decreasing order */
   ip=0;
   alp=dmatrix((*nitem)+1,(*ncateg));
-  param=(double *) Calloc(np, double);
+  param=(double *) calloc(np, sizeof(double));
   for(i=0;i<(*nitem);i++)
   { for(j=0;j<((*ncateg)-1);j++)  
     { alp[i+1][j+1]=*(alphas + (((*ncateg)-1)*i+j)); param[ip]=alp[i+1][j+1]; ip++;

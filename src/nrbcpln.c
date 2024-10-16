@@ -166,7 +166,7 @@ void plnbclk(int np, double *param, double *obj, double **dd, int iprint,
 #ifndef R
   b=(double *) malloc((n+1) * sizeof(double));
 #else
-  b=(double *) Calloc((n+1), double);
+  b=(double *) calloc((n+1), sizeof(double));
 #endif
   ip=0;
   for(i=1;i<=n;i++)
@@ -198,7 +198,7 @@ void plnbclk(int np, double *param, double *obj, double **dd, int iprint,
 #ifndef R
   der=(double *) malloc((np+1) * sizeof(double));
 #else
-  der=(double *) Calloc((np+1), double);
+  der=(double *) calloc((np+1), sizeof(double));
 #endif
   hes=dmatrix(np+1,np+1);
 
@@ -493,8 +493,8 @@ void Rnrbcpln (int *nitem, int *ncateg, int *nrec, double *dataset, double *alph
    void summ2frbv(int, int, int, int, double **dat, double *fr, double *, int *);
    double *pp;
    
-   x=(double *) Calloc((*nq+1), double);
-   w=(double *) Calloc((*nq+1), double);
+   x=(double *) calloc((*nq+1), sizeof(double));
+   w=(double *) calloc((*nq+1), sizeof(double));
    gauher(x,w,*nq); 
    for (j=1;j<=*nq;j++) x[j]*=M_SQRT2; 
    for (j=1;j<=*nq;j++) w[j]/=SQRTPI; 
@@ -505,7 +505,7 @@ void Rnrbcpln (int *nitem, int *ncateg, int *nrec, double *dataset, double *alph
 
   /* convert to matrices in C (i.e. row/column transpose) */
    dat=dmatrix(*nrec,*nitem);
-   fr=(double *) Calloc((*nrec), double);
+   fr=(double *) calloc((*nrec), sizeof(double));
   /* nn = total of fr[] */
    for(i=0,nn=0;i<(*nrec);i++) 
    { for(j=0;j<(*nitem);j++) dat[i][j] = *(dataset + (j*(*nrec)+i)); 
@@ -516,10 +516,10 @@ void Rnrbcpln (int *nitem, int *ncateg, int *nrec, double *dataset, double *alph
    /*for(i=1,n2=1;i<=n;i++) n2*=m;*/
    np=(*ncateg)*(*nitem); 
    nm=((*nitem)*((*nitem)-1)*(*ncateg)*(*ncateg))/2; 
-   pp=(double *) Calloc((nm+2), double);
+   pp=(double *) calloc((nm+2), sizeof(double));
 
-   lb=(double *) Calloc(np, double);
-   ub=(double *) Calloc(np, double);
+   lb=(double *) calloc(np, sizeof(double));
+   ub=(double *) calloc(np, sizeof(double));
    for(ip=0;ip<np;ip++) { lb[ip]=*(abound+0); ub[ip]=*(abound+1); }
     
    if (*iprint==1)
@@ -538,7 +538,7 @@ void Rnrbcpln (int *nitem, int *ncateg, int *nrec, double *dataset, double *alph
   /*alphas */
 
    alp=dmatrix((*nitem)+1,(*ncateg));
-   param=(double *) Calloc(np, double);
+   param=(double *) calloc(np, sizeof(double));
    for(i=0;i<(*nitem);i++)
    { for(j=0;j<((*ncateg)-1);j++) 
      { alp[i+1][j+1]=*(alphas + ((*ncateg-1)*i+j)); param[ip]=alp[i+1][j+1]; ip++;
@@ -547,7 +547,7 @@ void Rnrbcpln (int *nitem, int *ncateg, int *nrec, double *dataset, double *alph
    }
 
   /*bvec*/
-   b=(double *) Calloc(((*nitem)+1), double); 
+   b=(double *) calloc(((*nitem)+1), sizeof(double)); 
    for(i=0;i<(*nitem);i++)  
    { param[ip]=*(bvec + i); b[i+1]=*(bvec + i); ip++; 
     /*printf("beta(%d)=%f\n",i,b[i]);*/

@@ -68,7 +68,7 @@ void startpln(int n, int m, int nn, int nrec, double **dat, double *fr,
 #ifndef R
   s=(double *) malloc(m * sizeof(double));
 #else
-  s=(double *) Calloc(m, double);
+  s=(double *) calloc(m, sizeof(double));
 #endif
   /* univariate margins */
   ii=0;
@@ -104,8 +104,8 @@ double **dmatrix(int nrow, int ncol)
   avec=(double *)malloc((unsigned) (nrow*ncol)*sizeof(double));
   amat=(double **)malloc((unsigned) nrow*sizeof(double*));
 #else
-  avec=(double *)Calloc((unsigned) (nrow*ncol), double);
-  amat=(double **)Calloc((unsigned) nrow, double*);    
+  avec=(double *)calloc((unsigned) (nrow*ncol), sizeof(double));
+  amat=(double **)calloc((unsigned) nrow, sizeof(double*));    
 #endif
   for(i=0;i<nrow;i++) amat[i]=avec+i*ncol;
   return amat;
@@ -117,8 +117,8 @@ int **imatrix(int nrow, int ncol)
   avec=(int *)malloc((unsigned) (nrow*ncol)*sizeof(int));
   amat=(int **)malloc((unsigned) nrow*sizeof(int*));
 #else
-  avec=(int *)Calloc((unsigned) (nrow*ncol),int);
-  amat=(int **)Calloc((unsigned) nrow, int*);    
+  avec=(int *)calloc((unsigned) (nrow*ncol),sizeof(int));
+  amat=(int **)calloc((unsigned) nrow, sizeof(int*));    
 #endif
   for(i=0;i<nrow;i++) amat[i]=avec+i*ncol;
   return amat;
@@ -137,7 +137,7 @@ void Rstartpln( int *nitem, int *ncateg, int *nrec, double *dataset, double *tes
   /*printf("%d %d %d %f\n", nitem, ncateg, nrec,*aa); */
   /* convert to matrices in C (i.e. row/column transpose */ 
   dat=dmatrix(*nrec,*nitem); 
-  fr=(double *) Calloc(*nrec, double);
+  fr=(double *) calloc(*nrec, sizeof(double));
 
 
   /* nn = total of fr[]  */

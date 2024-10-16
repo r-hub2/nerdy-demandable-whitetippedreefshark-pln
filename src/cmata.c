@@ -162,7 +162,7 @@ void nullsp(double **a, int n, int m, double **acomp, int ipr)
   #ifndef R
   z=(double *) malloc((n+1) * sizeof(double));
   #else
-  z=(double *) Calloc((n+1), double);
+  z=(double *) calloc((n+1), sizeof(double));
   #endif
   a1svd2(m,n,a0,eps,v,z,ipr);
 

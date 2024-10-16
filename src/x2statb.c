@@ -22,8 +22,8 @@ double x2statb(int n,int m, int nrec, double **dat, double *fr, double **alp, do
   ii=(int *) malloc((n+1) * sizeof(int));
   kk=(int *) malloc((n+1) * sizeof(int));
 #else
-  ii=(int *) Calloc((n+1), int);
-  kk=(int *) Calloc((n+1), int);    
+  ii=(int *) calloc((n+1), sizeof(int));
+  kk=(int *) calloc((n+1), sizeof(int));    
 #endif
   for(i=1;i<=n;i++) ii[i]=i;
   for(ic=0,x2=0.,sumexp=0.;ic<nrec;ic++)
