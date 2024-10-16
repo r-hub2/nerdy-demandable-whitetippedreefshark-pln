@@ -226,9 +226,9 @@ void Rsimulpln( int *nitems0, int *ncateg0, int *nsampsize0, double *alpvec, dou
   }
     
     
-  Free(w); Free(x); Free(cdfw);
-  Free(alp[0]); Free(alp); Free(b);
-  Free(dat[0]); Free(dat); Free(fr);
-  Free(datfr[0]); Free(datfr);  
+  free(w); free(x); free(cdfw);
+  free(alp[0]); free(alp); free(b);
+  free(dat[0]); free(dat); free(fr);
+  free(datfr[0]); free(datfr);  
 }
 #endif

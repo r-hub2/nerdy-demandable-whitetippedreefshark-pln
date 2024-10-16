@@ -108,7 +108,8 @@ void bclcov(int *n00, int *m0, int *nobs0, double *param, double **V,
    double *x, double *w, int nq);
   void d2v(int d, int k, int ii, int *jj);
   int ii[5],kk[5],*cb;
-  int ip,jp,j1,j2,k1,k2,iv,r,ic,m2,ijk,ic1,ic2;
+  int ip,jp,j1,j2,k1,k2,iv,r,ic,ijk,ic1,ic2;
+  //int m2; // not used
   double **dmatrix(int,int);
   double ***gmatrix(int,int,int);
   void gauher(double *, double *, int);
@@ -130,7 +131,7 @@ void bclcov(int *n00, int *m0, int *nobs0, double *param, double **V,
 
   for(i=1,n20=1;i<=n0;i++) n20*=m;
   if(*iprint==1) printf("\n#items=%d, #cells=%d^%d=%d\n", n0,m,n0,n20);
-  np=m*n0; m2=m*m;
+  np=m*n0;// m2=m*m;
   A=dmatrix(np+1,2*np+1);
   MM=dmatrix(np+1,np+1);
   D=dmatrix(np+1,np+1);
@@ -362,7 +363,7 @@ void plgnderghi(int n, int m, double **alp, double *b, int r,
 #ifndef R
   free(fn);
 #else
-  Free(fn);
+  free(fn);
 #endif
 }
 
@@ -655,12 +656,12 @@ void Rbclcov(int *n00, int *m0, int *nobs0, double *param, double *Vout, int *nq
       *(Vout + (jp+ip*np)) = V[ip][jp];
     }
   }
-  Free(A[0]); Free(A);
-  Free(MM[0]); Free(MM);
-  Free(D[0]); Free(D);
-  Free(derjk[0][0]); Free(derjk[0]); Free(derjk);
-  Free(der); Free(cb);
-  Free(w); Free(x); 
-  Free(b); Free(alp[0]); Free(alp);
+  free(A[0]); free(A);
+  free(MM[0]); free(MM);
+  free(D[0]); free(D);
+  free(derjk[0][0]); free(derjk[0]); free(derjk);
+  free(der); free(cb);
+  free(w); free(x); 
+  free(b); free(alp[0]); free(alp);
 }
 #endif

@@ -42,7 +42,7 @@ double x2statb(int n,int m, int nrec, double **dat, double *fr, double **alp, do
 #ifndef R
   free(ii); free(kk);
 #else
-  Free(ii); Free(kk);
+  free(ii); free(kk);
 #endif
   return x2;
 }

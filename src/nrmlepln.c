@@ -237,9 +237,9 @@ void plnnllk(int np, double *param, double *nllk, double **dd, int iprint,
   free(der); free(hes[0]); free(hes);
   free(alp[0]); free(alp); free(b);
 #else
-  Free(kk);
-  Free(der); Free(hes[0]); Free(hes);
-  Free(alp[0]); Free(alp); Free(b);
+  free(kk);
+  free(der); free(hes[0]); free(hes);
+  free(alp[0]); free(alp); free(b);
 #endif
 }
 
@@ -380,19 +380,19 @@ void Rnrmlepln( int *nitem, int *ncateg, int *nrec, double *dataset,
    for(ip=0;ip<np;ip++)   
    { for(jp=0;jp<np;jp++) *(invhesout + (jp+ip*np))=invhes[ip][jp];}  
 
-   Free(invhes[0]); Free(invhes);  
-   Free(alp[0]); Free(alp);  
-   Free(b);  
-   Free(dat[0]); Free(dat);  
-   Free(fr); Free(param);  
-   Free(w); Free(x);  
-   Free(ub); Free(lb);  
-   Free(g[0][0]);  
-   Free(g[0]); Free(g);  
-   Free(g1[0][0]);  
-   Free(g1[0]); Free(g1);  
-   Free(g2[0][0]);  
-   Free(g2[0]); Free(g2);  
+   free(invhes[0]); free(invhes);  
+   free(alp[0]); free(alp);  
+   free(b);  
+   free(dat[0]); free(dat);  
+   free(fr); free(param);  
+   free(w); free(x);  
+   free(ub); free(lb);  
+   free(g[0][0]);  
+   free(g[0]); free(g);  
+   free(g1[0][0]);  
+   free(g1[0]); free(g1);  
+   free(g2[0][0]);  
+   free(g2[0]); free(g2);  
 }
 
 #endif

@@ -250,15 +250,15 @@ double m2rasch(int n, int m, int ng, double *pp, double **alp, double b0, int nn
   free(iimat[0]); free(iimat);
   free(kkmat[0]); free(kkmat);
 #else
-  Free(ii); Free(kk); Free(cc); Free(dd); Free(ss); Free(tt);
-  Free(b);
-  Free(del[0]); Free(del);
-  Free(xi[0]); Free(xi);
-  Free(cmat[0]); Free(cmat);
-  Free(pr); Free(e);
-  Free(rvec);
-  Free(iimat[0]); Free(iimat);
-  Free(kkmat[0]); Free(kkmat);    
+  free(ii); free(kk); free(cc); free(dd); free(ss); free(tt);
+  free(b);
+  free(del[0]); free(del);
+  free(xi[0]); free(xi);
+  free(cmat[0]); free(cmat);
+  free(pr); free(e);
+  free(rvec);
+  free(iimat[0]); free(iimat);
+  free(kkmat[0]); free(kkmat);    
 #endif
   return m2;
 }
@@ -352,7 +352,7 @@ void raschdergh(int n, int m, double **alp, double b0, int r,
 #ifndef R
   free(fn);
 #else
-  Free(fn);
+  free(fn);
 #endif
 }
 
@@ -449,7 +449,7 @@ void summ2fr(int n, int m, int nn, int nrec, double **dat, double *fr,
 #ifndef R
   free(s); free(s2[0]); free(s2);
 #else
-  Free(s); Free(s2[0]); Free(s2);
+  free(s); free(s2[0]); free(s2);
 #endif
 }
 #endif
@@ -581,11 +581,11 @@ void Rm2rasch(int *nitem, int *ncateg, int *nrec, double *dataset, double *alpha
 
    *dfraschout = ng-np; 
 
-   Free(w); Free(x); 
-   Free(pp);  
-   Free(alp[0]); Free(alp); Free(b);  
-   Free(dat[0]); Free(dat); Free(fr);  
-   Free(c2);   
+   free(w); free(x); 
+   free(pp);  
+   free(alp[0]); free(alp); free(b);  
+   free(dat[0]); free(dat); free(fr);  
+   free(c2);   
 }
 
 #endif

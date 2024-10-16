@@ -92,7 +92,7 @@ void startpln(int n, int m, int nn, int nrec, double **dat, double *fr,
 #ifndef R
   free(s);
 #else
-  Free(s);   
+  free(s);   
 #endif
 }
 
@@ -147,8 +147,8 @@ void Rstartpln( int *nitem, int *ncateg, int *nrec, double *dataset, double *tes
     /*if(i<10) printf("%f %f\n", dat[i][nitem-1], fr[i]);*/ 
   }
   startpln(*nitem,*ncateg,nn,*nrec,dat,fr,testout);
-  Free(fr); 
-  Free(dat[0]); Free(dat); 
+  free(fr); 
+  free(dat[0]); free(dat); 
 } 
 
 # endif

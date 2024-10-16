@@ -75,7 +75,7 @@ void qfmat(int ss, int q, double **Xir, double **Delr, double **Cmat)
 #ifndef R
   free(b[0]); free(b); 
 #else
-  Free(b[0]); Free(b); 
+  free(b[0]); free(b); 
 #endif
   gepp3(A,ssq,ssq+ss,&ldet,1.e-12,&parity);
 #ifndef R
@@ -95,7 +95,7 @@ void qfmat(int ss, int q, double **Xir, double **Delr, double **Cmat)
 #ifndef R  
   free(A[0]); free(A); free(Delc[0]); free(Delc);
 #else
-  Free(A[0]); Free(A); Free(Delc[0]); Free(Delc);
+  free(A[0]); free(A); free(Delc[0]); free(Delc);
 #endif
 }
 
@@ -169,7 +169,7 @@ void nullsp(double **a, int n, int m, double **acomp, int ipr)
 #ifndef R
   free(a0[0]); free(a0);
 #else
-  Free(a0[0]); Free(a0);    
+  free(a0[0]); free(a0);    
 #endif
   /* extract last columns of v */
   for(i=1;i<=m;i++) { if(z[i]<azero) break; } 
@@ -187,7 +187,7 @@ void nullsp(double **a, int n, int m, double **acomp, int ipr)
 #ifndef R
   free(v[0]); free(v); free(z);
 #else
-  Free(v[0]); Free(v); Free(z);
+  free(v[0]); free(v); free(z);
 #endif
 }
 

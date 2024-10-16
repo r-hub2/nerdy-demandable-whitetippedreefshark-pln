@@ -3,7 +3,7 @@
 ## Fix
 
 - Clean up a NOTE re: tests text changed, output ok
-- Clean up issues with calloc
+- Clean up issues with C code (calloc, free)
 
 # pln 0.2-2
 

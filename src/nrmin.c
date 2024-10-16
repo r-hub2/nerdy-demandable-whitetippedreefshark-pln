@@ -109,7 +109,7 @@ void nrmin(int np, double *val,
 #ifndef R
   free(dd[0]); free(dd);
 #else
-  Free(dd[0]); Free(dd);
+  free(dd[0]); free(dd);
 #endif
   *fnval=out;
 
@@ -135,7 +135,7 @@ void nrmin(int np, double *val,
 #ifndef R
   free(dd[0]); free(dd);
 #else
-  Free(dd[0]); Free(dd);
+  free(dd[0]); free(dd);
 #endif
 }
 
